@@ -1,0 +1,44 @@
+name: Cypress Regression Suite
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  cypress-run:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+          
+      - name: Install dependencies
+        run: npm ci
+        
+      - name: Run Cypress Tests
+        uses: cypress-io/github-action@v6
+        with:
+          browser: chrome
+          
+      - name: Generate Custom HTML Report
+        if: always()
+        run: npm run test:report
+          
+      - name: Upload Test Report & Videos
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cypress-test-artifacts
+          path: |
+            cypress/reports/html/
+            cypress/videos/
+            cypress/screenshots/
+          retention-days: 14

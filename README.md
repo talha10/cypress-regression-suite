@@ -32,7 +32,7 @@ cypress-regression-suite/
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/talhakhattak/cypress-regression-suite.git
+   git clone https://github.com/talha10/cypress-regression-suite.git
    cd cypress-regression-suite
    ```
 
